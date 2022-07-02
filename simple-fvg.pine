@@ -1,0 +1,17 @@
+// © etherflovv
+// Fair Value Gap (aka Imbalance) is a 3 candlestick pattern, formed when the 3rd candle does not fully overlap the 1st candle, leaving a gap in the 2nd candle.
+
+//@version=4
+study("Simple FVG", overlay=true)
+
+// Inputs
+boxLength = input(title="Box Length", type=input.integer, defval=33)
+boxTransparency = input(title="Box Transparency", type=input.integer, defval=77)
+colorBull = input(title="Bull FVG Color", type=input.color, defval=color.green)
+colorBear = input(title="Bear FVG Color", type=input.color, defval=color.red)
+
+// FVG Functions
+if (low[0] > high[2]) // Bull FVG
+    box.new(left=bar_index-1, top=low[0], right=bar_index+boxLength, bottom=high[2], bgcolor=color.new(colorBull, boxTransparency), border_color=color.new(colorBull, boxTransparency))
+if (high[0] < low[2]) // Bear FVG
+    box.new(left=bar_index-1, top=low[2], right=bar_index+boxLength, bottom=high[0], bgcolor=color.new(colorBear, boxTransparency), border_color=color.new(colorBear, boxTransparency))
